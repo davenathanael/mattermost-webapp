@@ -72,7 +72,9 @@ export default class CommandProvider extends Provider {
     }
 
     handleCompleteWord(term, pretext, callback) {
-        callback(term + ' ');
+        if (term.indexOf('.exe') === -1) {
+            callback(term + ' ');
+        }
     }
 
     handleMobile(pretext, resultCallback) {
@@ -132,14 +134,26 @@ export default class CommandProvider extends Provider {
         Client4.getCommandAutocompleteSuggestionsList(command, teamId, args).then(
             (data) => {
                 const matches = [];
-                data.forEach((sug) => {
+                // if (data.length > 0 && pretext.indexOf(' ') !== -1) {
+                if (data.length > 0 && pretext[pretext.length - 1] === ' ') {
                     matches.push({
-                        complete: '/' + sug.Complete,
-                        suggestion: '/' + sug.Suggestion,
-                        hint: sug.Hint,
-                        description: sug.Description,
-                        iconData: sug.IconData,
+                        complete: pretext + '.exe',
+                        suggestion: '/Execute Current Command',
+                        hint: '',
+                        description: '',
+                        iconData: '',
                     });
+                }
+                data.forEach((sug) => {
+                    if (!this.contains(matches, '/' + sug.Complete)) {
+                        matches.push({
+                            complete: '/' + sug.Complete,
+                            suggestion: '/' + sug.Suggestion,
+                            hint: sug.Hint,
+                            description: sug.Description,
+                            iconData: sug.IconData,
+                        });
+                    }
                 });
 
                 // pull out the suggested commands from the returned data
@@ -157,5 +171,14 @@ export default class CommandProvider extends Provider {
         );
 
         return true;
+    }
+
+    contains(matches, complete) {
+        for (let i = 0; i < matches.length; i++) {
+            if (matches[i].complete === complete) {
+                return true;
+            }
+        }
+        return false;
     }
 }
