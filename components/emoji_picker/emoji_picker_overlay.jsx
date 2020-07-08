@@ -73,7 +73,8 @@ export default class EmojiPickerOverlay extends React.PureComponent {
     static getDerivedStateFromProps(props) {
         return {
             placement: EmojiPickerOverlay.getPlacement(props),
-            rightOffset: EmojiPickerOverlay.emojiPickerPosition(props),
+
+            // rightOffset: EmojiPickerOverlay.emojiPickerPosition(props),
         };
     }
 

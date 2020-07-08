@@ -21,6 +21,7 @@ import Textbox from 'components/textbox';
 import TextboxLinks from 'components/textbox/textbox_links';
 
 const KeyCodes = Constants.KeyCodes;
+const TOP_OFFSET = 15;
 
 class EditPostModal extends React.PureComponent {
     static propTypes = {
@@ -155,7 +156,7 @@ class EditPostModal extends React.PureComponent {
         this.editbox.focus();
     }
 
-    getEditPostControls = () => {
+    getTarget = () => {
         return this.refs.editPostEmoji;
     }
 
@@ -375,17 +376,16 @@ class EditPostModal extends React.PureComponent {
                     <EmojiPickerOverlay
                         show={this.state.showEmojiPicker}
                         container={this.getContainer}
-                        target={this.getEditPostControls}
+                        target={this.getTarget}
                         onHide={this.hideEmojiPicker}
                         onEmojiClick={this.handleEmojiClick}
                         onGifClick={this.handleGifClick}
                         enableGifPicker={this.props.config.EnableGifPicker === 'true'}
-                        topOffset={-20}
+                        topOffset={TOP_OFFSET}
                     />
                     <button
                         aria-label={emojiButtonAriaLabel}
                         id='editPostEmoji'
-                        ref='editPostEmoji'
                         className='style--none post-action'
                         onClick={this.toggleEmojiPicker}
                     >
@@ -431,7 +431,6 @@ class EditPostModal extends React.PureComponent {
                 </Modal.Header>
                 <Modal.Body
                     bsClass={`modal-body edit-modal-body${this.state.showEmojiPicker ? ' edit-modal-body--add-reaction' : ''}`}
-                    ref='editModalBody'
                 >
                     <div className='post-create__container'>
                         <div className='textarea-wrapper'>
@@ -473,7 +472,10 @@ class EditPostModal extends React.PureComponent {
                         </div>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer
+                    ref='editModalBody'
+                    style={{position: 'relative'}}
+                >
                     <button
                         type='button'
                         className='btn btn-link'
@@ -484,18 +486,22 @@ class EditPostModal extends React.PureComponent {
                             defaultMessage='Cancel'
                         />
                     </button>
-                    <button
-                        id='editButton'
-                        type='button'
-                        className='btn btn-primary'
-                        disabled={this.isSaveDisabled()}
-                        onClick={this.handleEdit}
+                    <span
+                        ref='editPostEmoji'
                     >
-                        <FormattedMessage
-                            id='edit_post.save'
-                            defaultMessage='Save'
-                        />
-                    </button>
+                        <button
+                            id='editButton'
+                            type='button'
+                            className='btn btn-primary'
+                            disabled={this.isSaveDisabled()}
+                            onClick={this.handleEdit}
+                        >
+                            <FormattedMessage
+                                id='edit_post.save'
+                                defaultMessage='Save'
+                            />
+                        </button>
+                    </span>
                 </Modal.Footer>
             </Modal>
         );
