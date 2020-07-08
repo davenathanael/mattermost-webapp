@@ -487,9 +487,6 @@ class EditPostModal extends React.PureComponent {
                             defaultMessage='Cancel'
                         />
                     </button>
-                    <span
-                        ref='editModalFooter'
-                    >
                         <button
                             id='editButton'
                             type='button'
@@ -497,12 +494,15 @@ class EditPostModal extends React.PureComponent {
                             disabled={this.isSaveDisabled()}
                             onClick={this.handleEdit}
                         >
+                    <span
+                        ref='editModalFooter'
+                    >
                             <FormattedMessage
                                 id='edit_post.save'
                                 defaultMessage='Save'
                             />
-                        </button>
                     </span>
+                        </button>
                 </Modal.Footer>
             </Modal>
         );
