@@ -22,6 +22,7 @@ import TextboxLinks from 'components/textbox/textbox_links';
 
 const KeyCodes = Constants.KeyCodes;
 const TOP_OFFSET = 15;
+const RIGHT_OFFSET = 0;
 
 class EditPostModal extends React.PureComponent {
     static propTypes = {
@@ -382,6 +383,7 @@ class EditPostModal extends React.PureComponent {
                         onGifClick={this.handleGifClick}
                         enableGifPicker={this.props.config.EnableGifPicker === 'true'}
                         topOffset={TOP_OFFSET}
+                        noRightOffset='true'
                     />
                     <button
                         aria-label={emojiButtonAriaLabel}
@@ -495,6 +497,7 @@ class EditPostModal extends React.PureComponent {
                         onClick={this.handleEdit}
                     >
                         <span
+                            id='editModalFooter'
                             ref='editModalFooter'
                         >
                             <FormattedMessage
