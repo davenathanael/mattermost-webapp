@@ -157,7 +157,7 @@ class EditPostModal extends React.PureComponent {
     }
 
     getTarget = () => {
-        return this.refs.editPostEmoji;
+        return this.refs.editModalFooter;
     }
 
     handlePostError = (postError) => {
@@ -386,6 +386,7 @@ class EditPostModal extends React.PureComponent {
                     <button
                         aria-label={emojiButtonAriaLabel}
                         id='editPostEmoji'
+                        ref='editPostEmoji'
                         className='style--none post-action'
                         onClick={this.toggleEmojiPicker}
                     >
@@ -431,6 +432,7 @@ class EditPostModal extends React.PureComponent {
                 </Modal.Header>
                 <Modal.Body
                     bsClass={`modal-body edit-modal-body${this.state.showEmojiPicker ? ' edit-modal-body--add-reaction' : ''}`}
+                    ref='editModalBody'
                 >
                     <div className='post-create__container'>
                         <div className='textarea-wrapper'>
@@ -473,7 +475,6 @@ class EditPostModal extends React.PureComponent {
                     </div>
                 </Modal.Body>
                 <Modal.Footer
-                    ref='editModalBody'
                     style={{position: 'relative'}}
                 >
                     <button
@@ -487,7 +488,7 @@ class EditPostModal extends React.PureComponent {
                         />
                     </button>
                     <span
-                        ref='editPostEmoji'
+                        ref='editModalFooter'
                     >
                         <button
                             id='editButton'
